@@ -1,6 +1,18 @@
 version: '3'
 
 services:
+  api:
+    build: api
+    ports:
+      - "3000:3000"
+    environment:
+      - DD_ENV=development
+      - DD_HOST=datadog # this is the name of the datadog container
+    volumes:
+      - ./api:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - postgres
   postgres:
     image: postgres
     command:
@@ -18,6 +30,7 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_DB=postgres
+      - DD_ENV=development
     ports:
       - "5555:5432"
     labels:
@@ -31,7 +44,7 @@ services:
     depends_on:
       - postgres
     environment:
-      - DD_API_KEY=your_api_key
+      - DD_API_KEY=
       - DD_SITE=us5.datadoghq.com
       - DD_APM_ENABLED=true
       - DD_APM_NON_LOCAL_TRAFFIC=true
