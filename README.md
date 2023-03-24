@@ -13,7 +13,8 @@ Idk, just like for learnings purposes
   - In datadog UI, go to Integrations -> integrations
   - Add postgres
 - Create an api key
-- Paste your api key in docker-compose -> datadog -> environments -> DD_API_KEY
+- copy datadog.env.example to datadog.env
+- Paste your api key in datadog.env -> DD_API_KEY
 
 ## **Let's go**
 
@@ -25,3 +26,4 @@ docker-compose up
 
 - https://docs.datadoghq.com/integrations/postgres/?tab=docker
 - https://docs.datadoghq.com/agent/guide/compose-and-the-datadog-agent/
+- https://github.com/vercel/next.js/discussions/16600

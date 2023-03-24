@@ -1,8 +1,29 @@
 version: '3'
 
 services:
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    command: yarn dev
+    ports:
+      - "3001:3001"
+    environment:
+      - DD_ENV=development
+      - DD_HOST=datadog # this is the name of the datadog container
+      - DD_LOGS_INJECTION=true
+      - DD_RUNTIME_METRICS_ENABLED=true
+      - NODE_OPTIONS=-r dd-trace/init
+    volumes:
+      - ./web:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - api
   api:
-    build: api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    command: yarn start:dev
     ports:
       - "3000:3000"
     environment:
@@ -33,6 +54,8 @@ services:
       - DD_ENV=development
     ports:
       - "5555:5432"
+    depends_on:
+      - datadog
     labels:
       com.datadoghq.ad.check_names: '["postgres"]'
       com.datadoghq.ad.init_configs: '[{}]'
@@ -41,10 +64,11 @@ services:
   datadog:
     build: datadog
     pid: host
+    env_file:
+      - datadog.env
     depends_on:
       - postgres
     environment:
-      - DD_API_KEY=
       - DD_SITE=us5.datadoghq.com
       - DD_APM_ENABLED=true
       - DD_APM_NON_LOCAL_TRAFFIC=true
