@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { TodoEntity } from './todo.entity';
+import { TodoEntity } from '../entities/todo.entity';
 
 @Controller('todos')
 export class TodoController {
@@ -20,7 +20,11 @@ export class TodoController {
 
   @Get()
   async findAll(): Promise<TodoEntity[]> {
-    return this.todoRepository.find();
+    return this.todoRepository.find({
+      order: {
+        id: 'ASC',
+      },
+    });
   }
 
   @Post()
@@ -34,7 +38,7 @@ export class TodoController {
 
     todo.completed = !todo.completed;
 
-    return this.todoRepository.save(todo);
+    return await this.todoRepository.save(todo);
   }
 
   @Delete('/:id')
