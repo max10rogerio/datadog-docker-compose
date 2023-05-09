@@ -2,7 +2,7 @@ version: '3'
 
 services:
   web:
-    container_name: web
+    container_name: datadog.pdi.web
     build:
       context: ./web
       dockerfile: Dockerfile.dev
@@ -23,7 +23,7 @@ services:
     depends_on:
       - api
   api:
-    container_name: api
+    container_name: datadog.pdi.api
     build:
       context: ./api
       dockerfile: Dockerfile
@@ -34,13 +34,15 @@ services:
     environment:
       - DD_ENV=development
       - DD_HOST=datadog # this is the name of the datadog container
+      - DD_LOGS_INJECTION=true
+      - DD_APPSEC_ENABLED=true
     volumes:
       - ./api:/usr/src/app
       - api/node_modules
     depends_on:
       - postgres
   postgres:
-    container_name: postgres
+    container_name: datadog.pdi.postgres
     image: postgres
     command:
       [
@@ -66,11 +68,21 @@ services:
       com.datadoghq.ad.check_names: '["postgres"]'
       com.datadoghq.ad.init_configs: '[{}]'
       com.datadoghq.ad.instances: '[{"host":"%%host%%", "port":5432,"username":"datadog","password":"datadog"}]'
-      com.datadoghq.ad.logs: '[{"source":"postgresql","service":"postgresql"}]'
+      com.datadoghq.ad.logs: >-
+        [{
+          "source": "postgresql",
+          "service": "datadog.pdi.postgres",
+          "log_processing_rules": [{
+            "type": "multi_line",
+            "name": "log_start_with_date",
+            "pattern" : "\\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"
+          }]
+        }]
   datadog:
-    container_name: datadog
+    container_name: datadog.pdi.datadog
     build: datadog
     pid: host
+    tty: true
     env_file:
       - datadog.env
     environment:
