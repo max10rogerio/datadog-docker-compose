@@ -45,4 +45,9 @@ export class TodoController {
   async delete(@Param('id') id: number): Promise<void> {
     await this.todoRepository.delete(id);
   }
+
+  @Get('/throw-error')
+  async throwError(a: any): Promise<void> {
+    console.log(a.b);
+  }
 }

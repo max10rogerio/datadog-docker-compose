@@ -12,16 +12,20 @@ services:
       - "3000:3000"
     environment:
       - DD_ENV=development
-      - DD_HOST=datadog # this is the name of the datadog container
+      - DD_AGENT_HOST=datadog.pdi.datadog # this is the name of the datadog container
+      - DD_TRACE_AGENT_PORT=8126
+      - DD_PROFILING_ENABLED=true
       - DD_LOGS_INJECTION=true
-      - DD_RUNTIME_METRICS_ENABLED=true
-      - NODE_OPTIONS=-r dd-trace/init
+      - DD_APPSEC_ENABLED=true
+      - DD_TRACE_SAMPLE_RATE="1"
       - NODE_ENV=development
     volumes:
       - ./web:/app
       - web/node_modules
     depends_on:
       - api
+    networks:
+      - app
   api:
     container_name: datadog.pdi.api
     build:
@@ -33,17 +37,25 @@ services:
       - "3333:3333"
     environment:
       - DD_ENV=development
-      - DD_HOST=datadog # this is the name of the datadog container
+      - DD_AGENT_HOST=datadog.pdi.datadog # this is the name of the datadog container
+      - DD_TRACE_AGENT_PORT=8126
+      - DD_PROFILING_ENABLED=true
       - DD_LOGS_INJECTION=true
       - DD_APPSEC_ENABLED=true
+      - DD_TRACE_SAMPLE_RATE="1"
     volumes:
       - ./api:/usr/src/app
       - api/node_modules
     depends_on:
       - postgres
+      - datadog
+    networks:
+      - app
   postgres:
     container_name: datadog.pdi.postgres
     image: postgres
+    networks:
+      - app
     command:
       [
         "postgres",
@@ -85,17 +97,22 @@ services:
     tty: true
     env_file:
       - datadog.env
+    networks:
+      - app
     environment:
       - DD_SITE=us5.datadoghq.com
       - DD_APM_ENABLED=true
-      - DD_APM_NON_LOCAL_TRAFFIC=true
       - DD_LOGS_ENABLED=true
       - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock:ro
       - /proc/:/host/proc/:ro
-      - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
 
 volumes:
   db_data:
     driver: local
+
+networks:
+  app:
+    driver: bridge

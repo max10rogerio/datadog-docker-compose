@@ -1,4 +1,5 @@
 export const envs = {
+  env: process.env.NODE_ENV || "development",
   datadog: {
     application_id: process.env.DATADOG_APPLICATION_ID!,
     client_token: process.env.DATADOG_CLIENT_TOKEN!,
