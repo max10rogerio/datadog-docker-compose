@@ -9,7 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@datadog/browser-rum": "^4.36.0",
+    "@datadog/browser-logs": "^4.42.2",
+    "@datadog/browser-rum": "^4.42.2",
     "@types/node": "18.15.6",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",

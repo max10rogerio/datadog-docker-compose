@@ -9,25 +9,32 @@
   dependencies:
     regenerator-runtime "^0.13.11"
 
-"@datadog/browser-core@4.36.0":
-  version "4.36.0"
-  resolved "https://registry.yarnpkg.com/@datadog/browser-core/-/browser-core-4.36.0.tgz#840789b9b9c42a1a48d8c737605c843bee1d6248"
-  integrity sha512-eJIygwTOfkeWN/+V7DcQzSQCZM0Bu7zXXbTkWrgYyWU9a4u/6op1LJtF7ZP/nD7yXg18Tvxx9INPN9ikzjoiiQ==
+"@datadog/browser-core@4.42.2":
+  version "4.42.2"
+  resolved "https://registry.yarnpkg.com/@datadog/browser-core/-/browser-core-4.42.2.tgz#834312b53c3d466666f892e76e766b50b4db021b"
+  integrity sha512-LnkcdFyNRpMEuvV1ePfKdgRvYh+VqqAiVRoAmgObcuzdYdIwQSfcJp4GFbBgr5v7uF2uhAp/b96MIyKlqi0Ixg==
 
-"@datadog/browser-rum-core@4.36.0":
-  version "4.36.0"
-  resolved "https://registry.yarnpkg.com/@datadog/browser-rum-core/-/browser-rum-core-4.36.0.tgz#e7ccd83dfdd179ad72d557e8abbceb213c8013b2"
-  integrity sha512-8Sq5NJ6FpHJ4OsuBx2FSCY5N6C6774EG4QLK48hK4D9Dcb7zEgwBS2KZ7g9DC+yYdnTLxhUo4JV2/XIdZ4SP0g==
+"@datadog/browser-logs@^4.42.2":
+  version "4.42.2"
+  resolved "https://registry.yarnpkg.com/@datadog/browser-logs/-/browser-logs-4.42.2.tgz#da946410b8d8eee3e26835bece59fe4671e23994"
+  integrity sha512-idl9DilUGmWbmYb1D6VPmkpnhqaIdsQ08qjOw1c0QbtGUAFlFYyFCrugf2qwMt8QbJ8DqvEiwULTVAZOV9O4kA==
   dependencies:
-    "@datadog/browser-core" "4.36.0"
+    "@datadog/browser-core" "4.42.2"
 
-"@datadog/browser-rum@^4.36.0":
-  version "4.36.0"
-  resolved "https://registry.yarnpkg.com/@datadog/browser-rum/-/browser-rum-4.36.0.tgz#66c777bae2f0cdd3e82c83c57794c61ad3ce26a1"
-  integrity sha512-bS+4qlDouYgFjuMdYKH2xrqwClQm+kiwSEuaaRPlj2eYLffsVWlOuOrMupp7MqfSvFy9RhOCudiHtk+bdYQ83A==
+"@datadog/browser-rum-core@4.42.2":
+  version "4.42.2"
+  resolved "https://registry.yarnpkg.com/@datadog/browser-rum-core/-/browser-rum-core-4.42.2.tgz#50b8ec37891705a7279eff907ad7f1a2e5d84c27"
+  integrity sha512-I7If2eJvgk820vbsthl7JVLJcqlny5hS3PyoegOZ7p0q+la1WF4GMS0u9RSDsCT4t87pBe70u0TdsmJj3K9HOw==
   dependencies:
-    "@datadog/browser-core" "4.36.0"
-    "@datadog/browser-rum-core" "4.36.0"
+    "@datadog/browser-core" "4.42.2"
+
+"@datadog/browser-rum@^4.42.2":
+  version "4.42.2"
+  resolved "https://registry.yarnpkg.com/@datadog/browser-rum/-/browser-rum-4.42.2.tgz#746f5a3eaf7b9ec97fb8aa8274ce925ca1559cfb"
+  integrity sha512-wwAOSYxBF9FAEk1L7YHa2bJHliaqiuk4i6mrzRw5Z5Xa5kzPX0HzIWlZ6FdqtCEstO1A8wcPL96TGPDpoDArFw==
+  dependencies:
+    "@datadog/browser-core" "4.42.2"
+    "@datadog/browser-rum-core" "4.42.2"
 
 "@eslint-community/eslint-utils@^4.2.0":
   version "4.3.0"

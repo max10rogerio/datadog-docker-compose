@@ -6,7 +6,9 @@ import { AppModule } from './app.module';
 import { env } from './config/env';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { bufferLogs: true });
+  const app = await NestFactory.create(AppModule, {
+    bufferLogs: true,
+  });
 
   app.useLogger(app.get(PinoLogger));
   app.enableCors();
